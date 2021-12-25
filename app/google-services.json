@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "692782052673",
+    "project_id": "prueba-tecnica-bca3f",
+    "storage_bucket": "prueba-tecnica-bca3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692782052673:android:2de2e7938e0626457f5dc0",
+        "android_client_info": {
+          "package_name": "com.example.pruebatecnica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692782052673-ibpvb782eviuljpjviijssd22nclaflh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYVx5U2rF2uRzBhpZrc2R718SuW8I5lxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692782052673-ibpvb782eviuljpjviijssd22nclaflh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ package com.example.pruebatecnica
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: PelisAdapter
     private var pelisImagen = mutableListOf<String>()
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
