@@ -7,9 +7,10 @@ import com.squareup.picasso.Picasso
 
 class PelisViewHolder(view: View):RecyclerView.ViewHolder(view) {
     private val binding = ItemPeliBinding.bind(view)
-    fun bind(imagen:String, titulo:String){
+    fun bind(imagen:String, titulo:String, descripcion:String){
         Picasso.get().load(imagen).into(binding.imgPeli)
         binding.txtNombre.text = titulo
+        binding.txtDesc.text = descripcion
     }
 
 }

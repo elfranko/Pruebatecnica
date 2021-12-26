@@ -19,16 +19,23 @@ import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
+import androidx.fragment.app.FragmentManager
 import com.example.pruebatecnica.MainActivity
 import com.example.pruebatecnica.R
 import com.example.pruebatecnica.adapters.PelisAdapter
 import com.example.pruebatecnica.databinding.FragmentUbicacionBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import java.util.jar.Manifest
 
 
-class ubicacionFragment : Fragment() {
+class ubicacionFragment : Fragment(), OnMapReadyCallback {
 
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -37,6 +44,12 @@ class ubicacionFragment : Fragment() {
     private var _binding: FragmentUbicacionBinding? = null
     private val binding get() = _binding!!
 
+    private var latitudMap : Double ?= null
+    private var longitudMap : Double ?= null
+
+    private lateinit var map:GoogleMap
+
+    private lateinit var lastLocation: Location
 
 
     override fun onCreateView(
@@ -130,6 +143,10 @@ class ubicacionFragment : Fragment() {
                          binding.txtUbi.text = "LATITUD = " + location.latitude.toString()
                          binding.txtUbi2.text = "LONGUITUD = " + location.longitude.toString()
 
+                         latitudMap = location.latitude
+                         longitudMap = location.longitude
+
+
 
                      }
                  }
@@ -148,4 +165,39 @@ class ubicacionFragment : Fragment() {
         }
         return false
     }
+
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(googleMap: GoogleMap){
+
+        if (ActivityCompat.checkSelfPermission(activity as Activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity as Activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+          ActivityCompat.requestPermissions(activity as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), PERMISSION_ID)
+        }
+        map = googleMap
+        map.isMyLocationEnabled = true
+        map.uiSettings.isZoomControlsEnabled = true
+        
+        setUpMap()
+
+        map.apply {
+            val ubicacion_actual = LatLng(latitudMap!!, longitudMap!!)
+            addMarker(
+                MarkerOptions()
+                    .position(ubicacion_actual)
+                    .title("Ubicacion actual")
+            )?.showInfoWindow()
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion_actual, 13f))
+
+        }
+
+
+
+    }
+
+    private fun setUpMap() {
+
+      System.out.println("MAPA JALANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        
+    }
+
+
 }

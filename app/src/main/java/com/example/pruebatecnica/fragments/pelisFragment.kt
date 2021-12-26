@@ -30,6 +30,7 @@ class pelisFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var adapter: PelisAdapter
     private var pelisImagen = mutableListOf<String>()
     private var pelisTitulo = mutableListOf<String>()
+    private var pelisDesc = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +49,7 @@ class pelisFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
    private fun initRecyclerView(){
-       adapter = PelisAdapter(pelisImagen, pelisTitulo)
+       adapter = PelisAdapter(pelisImagen, pelisTitulo, pelisDesc)
        binding.rvPelis.layoutManager = LinearLayoutManager(activity)
        binding.rvPelis.adapter = adapter
 
@@ -73,15 +74,19 @@ class pelisFragment : Fragment(), SearchView.OnQueryTextListener {
                     val listapelis = peliculas?.resultados ?: Collections.emptyList()
                     val listaURL = mutableListOf<String>()
                     val listaTitulos = mutableListOf<String>()
+                    val listaDesc = mutableListOf<String>()
 
                     for(i in 0 until listapelis.size-1 ){
                         listaURL.add(Credenciales.URL_IMAGEN + listapelis[i].imagen)
                         listaTitulos.add(listapelis[i].nombre)
+                        listaDesc.add(listapelis[i].desc)
                     }
                     pelisImagen.clear()
                     pelisImagen.addAll(listaURL)
                     pelisTitulo.clear()
                     pelisTitulo.addAll(listaTitulos)
+                    pelisDesc.clear()
+                    pelisDesc.addAll(listaDesc)
                     adapter.notifyDataSetChanged()
                 }else {
                     showError()
@@ -100,15 +105,18 @@ class pelisFragment : Fragment(), SearchView.OnQueryTextListener {
                     val listapelis = peliculas?.resultados ?: Collections.emptyList()
                     val listaURL = mutableListOf<String>()
                     val listaTitulos = mutableListOf<String>()
-
+                    val listaDesc = mutableListOf<String>()
                     for(i in 0 until listapelis.size-1 ){
                         listaURL.add(Credenciales.URL_IMAGEN + listapelis[i].imagen)
                         listaTitulos.add(listapelis[i].nombre)
+                        listaDesc.add(listapelis[i].desc)
                     }
                     pelisImagen.clear()
                     pelisImagen.addAll(listaURL)
                     pelisTitulo.clear()
                     pelisTitulo.addAll(listaTitulos)
+                    pelisDesc.clear()
+                    pelisDesc.addAll(listaDesc)
                     adapter.notifyDataSetChanged()
                     System.out.println("pelicula cargada")
                 }else {
