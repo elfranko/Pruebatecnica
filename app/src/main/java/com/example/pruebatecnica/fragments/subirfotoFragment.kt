@@ -12,10 +12,18 @@ import androidx.fragment.app.FragmentContainer
 import com.example.pruebatecnica.R
 import com.example.pruebatecnica.databinding.FragmentPelisBinding
 import com.example.pruebatecnica.databinding.FragmentSubirfotoBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
+import retrofit2.http.POST
 
 
 class subirfotoFragment : Fragment() {
@@ -27,6 +35,10 @@ class subirfotoFragment : Fragment() {
     private val File = 1
     private val database = Firebase.database
     val myRef = database.getReference("user")
+    val storage = Firebase.storage.getReference().child("User")
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +53,23 @@ class subirfotoFragment : Fragment() {
        binding.button.setOnClickListener {
            subirFila()
        }
+        mostrarFoto()
+    }
+
+    fun mostrarFoto(){
+
+        myRef.child("link").get().addOnSuccessListener {
+            Picasso.get().load(it.value.toString()).into(binding.ultimafoto)
+
+        }.addOnFailureListener{
+
+        }
+
+
+
 
     }
+
 
     fun subirFila(){
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -63,13 +90,33 @@ class subirfotoFragment : Fragment() {
                         val hashMap =
                            HashMap<String, String>()
                         hashMap["link"] = java.lang.String.valueOf(uri)
+
                         myRef.setValue(hashMap)
+                        myRef.child("link").get().addOnSuccessListener {
+                            Picasso.get().load(it.value.toString()).into(binding.ultimafoto)
+
+                        }.addOnFailureListener{
+
+                        }
+
+
                         Toast.makeText(activity, "Se cargo la imagen", Toast.LENGTH_SHORT)
+
                     }
 
+
+
                 }
+
+
+
+
             }
         }
+
+
     }
+
+
 
 }

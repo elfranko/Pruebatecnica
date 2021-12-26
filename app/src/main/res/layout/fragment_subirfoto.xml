@@ -16,17 +16,27 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="100dp"
             android:backgroundTint="@color/acentado"
             android:text="Subir Foto"
             android:textColor="@color/secundario"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/ultimafoto"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            tools:layout_editor_absoluteX="0dp"
+            />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
 
