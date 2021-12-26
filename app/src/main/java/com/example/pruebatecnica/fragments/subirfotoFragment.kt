@@ -23,6 +23,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.http.POST
 
 
@@ -57,13 +60,18 @@ class subirfotoFragment : Fragment() {
     }
 
     fun mostrarFoto(){
+        CoroutineScope(Dispatchers.IO).launch{
+            myRef.child("link").get().addOnSuccessListener {
+                getActivity()?.runOnUiThread(){
+                    Picasso.get().load(it.value.toString()).into(binding.ultimafoto)
+                }
 
-        myRef.child("link").get().addOnSuccessListener {
-            Picasso.get().load(it.value.toString()).into(binding.ultimafoto)
 
-        }.addOnFailureListener{
+            }.addOnFailureListener{
 
+            }
         }
+
 
 
 
@@ -92,12 +100,13 @@ class subirfotoFragment : Fragment() {
                         hashMap["link"] = java.lang.String.valueOf(uri)
 
                         myRef.setValue(hashMap)
-                        myRef.child("link").get().addOnSuccessListener {
+                        mostrarFoto()
+                        /*myRef.child("link").get().addOnSuccessListener {
                             Picasso.get().load(it.value.toString()).into(binding.ultimafoto)
 
                         }.addOnFailureListener{
 
-                        }
+                        } */
 
 
                         Toast.makeText(activity, "Se cargo la imagen", Toast.LENGTH_SHORT)
