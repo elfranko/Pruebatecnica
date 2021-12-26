@@ -4,11 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="16dp"
     android:layout_margin="16dp"
-    android:layout_height="320dp">
+    android:layout_height="320dp"
+    android:background="@color/primario"
+    android:backgroundTint="@color/primario">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgPeli"
-        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_width="180dp"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:background="@color/primario"/>
+
+    <TextView
+        android:id="@+id/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="200dp"
+        android:text="TextView"
+        android:textColor="@color/acentado"/>
 </androidx.cardview.widget.CardView>

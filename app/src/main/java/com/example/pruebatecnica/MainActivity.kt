@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pruebatecnica.Respuestas.Peliculas
 import com.example.pruebatecnica.adapters.PelisAdapter
+import com.example.pruebatecnica.adapters.VPAdapter
 import com.example.pruebatecnica.databinding.ActivityMainBinding
+import com.example.pruebatecnica.fragments.pelisFragment
+import com.example.pruebatecnica.fragments.subirfotoFragment
+import com.example.pruebatecnica.fragments.ubicacionFragment
 import com.example.pruebatecnica.utils.Credenciales
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +26,7 @@ import java.time.temporal.TemporalQuery
 import java.util.Collections.emptyList
 
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: PelisAdapter
@@ -30,31 +35,56 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.svPelis.setOnQueryTextListener(this)
-        buscarPopular("popular")
-        initRecyclerView()
+        //binding.svPelis.setOnQueryTextListener(this)
+        //buscarPopular("popular")
+
+        //initRecyclerView()
+
+
+        setUpTabs()
+
+        ///Para quitar la barrita xD
+        supportActionBar?.hide()
+    }
+
+    private fun setUpTabs(){
+        val adapter = VPAdapter(supportFragmentManager)
+        adapter.addFragment(pelisFragment(), "Peliculas")
+        adapter.addFragment(ubicacionFragment(), "Ubicacion")
+        adapter.addFragment(subirfotoFragment(), "Subir foto")
+        binding.viewPager.adapter = adapter
+        binding.tabBar.setupWithViewPager(binding.viewPager)
+
+        binding.tabBar.getTabAt(0)
+        binding.tabBar.getTabAt(1)
+        binding.tabBar.getTabAt(2)
 
     }
 
-   private fun initRecyclerView(){
+
+
+
+ /*  private fun initRecyclerView(){
        adapter = PelisAdapter(pelisImagen)
        binding.rvPelis.layoutManager = LinearLayoutManager(this)
        binding.rvPelis.adapter = adapter
-   }
 
-    private fun getRetrofit():Retrofit{
+   }*/
+
+    /*private fun getRetrofit():Retrofit{
         return Retrofit.Builder()
             .baseUrl(Credenciales.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    }
+    }*/
 
-    private fun buscarPorNombre(query:String){
+   /* private fun buscarPorNombre(query:String){
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit().create(APIService::class.java).getPelisPorNombre("search/movie?api_key=" + Credenciales.KEY + "&query=$query")
             val peliculas = call.body()
@@ -74,10 +104,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 }
             }
         }
-    }
+    }*/
 
 
-    private fun buscarPopular(query:String){
+    /*private fun buscarPopular(query:String){
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit().create(APIService::class.java).getPelisPorNombre("movie/$query?api_key=" + Credenciales.KEY)
             val peliculas = call.body()
@@ -97,14 +127,14 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 }
             }
         }
-    }
+    }*/
 
 
-private fun showError(){
+/*private fun showError(){
     Toast.makeText(this, "Error al cargar peliculas", Toast.LENGTH_SHORT).show()
-}
+}*/
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
+   /* override fun onQueryTextSubmit(query: String?): Boolean {
         if (!query.isNullOrEmpty()){
             buscarPorNombre(query.toLowerCase())
         }
@@ -114,7 +144,6 @@ private fun showError(){
 
     override fun onQueryTextChange(newText: String?): Boolean {
       return true
-    }
-
+    }*/
 
 }
